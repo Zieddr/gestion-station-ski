@@ -1,13 +1,13 @@
 package tn.esprit.spring.tests;
 
+
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.spring.entities.Course;
@@ -41,6 +41,10 @@ public class CourseServiceImplMock {
         }
 
     };
+    @Befor
+    public void setUp() {
+        MockitoAnnotations.initMocks(this); // Initialize Mockito annotations
+    }
 
     @Test
     public void testRetriveCourse(){
