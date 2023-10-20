@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import tn.esprit.spring.entities.Course;
 import tn.esprit.spring.entities.Instructor;
 import tn.esprit.spring.repositories.IInstructorRepository;
@@ -27,7 +28,7 @@ import java.util.Optional;
 @ExtendWith(MockitoExtension.class)
 public class InstructorServicesImplTest {
 
-    @Mock
+    @MockBean
     IInstructorRepository ir;
 
     @InjectMocks
