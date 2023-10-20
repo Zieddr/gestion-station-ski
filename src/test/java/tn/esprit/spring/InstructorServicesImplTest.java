@@ -1,9 +1,6 @@
 package tn.esprit.spring;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -24,31 +21,28 @@ import java.util.Optional;
 
 
 @SpringBootTest
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ExtendWith(MockitoExtension.class)
-public class InstructorServicesImplTest {
-
+class InstructorServicesImplTest {
     @MockBean
     IInstructorRepository ir;
 
     @InjectMocks
     InstructorServicesImpl is;
 
-    Instructor instructor = new Instructor(Long.valueOf(1), "John", "Doe", LocalDate.of(2020, 1, 1), new HashSet<>());
+    Instructor instructor;
 
-    List<Instructor> instructorList = new ArrayList<Instructor>() {
-        {
-            add(new Instructor(Long.valueOf(2), "Kinene", "Dghim", LocalDate.of(2023, 10, 16), new HashSet<>()));
-            add(new Instructor(Long.valueOf(3), "Maher", "Gasmi", LocalDate.of(2023, 10, 15), new HashSet<>()));
-        }
-    };
-
+    @BeforeEach
+    void setUp() {
+        instructor = new Instructor(Long.valueOf(1), "John", "Doe", LocalDate.of(2020, 1, 1), new HashSet<>());
+    }
 
     @Test
-    public void testRetriveInstructor(){
+    public void testRetrieveInstructor() {
         Mockito.when(ir.findById(Mockito.anyLong())).thenReturn(Optional.of(instructor));
-        Instructor course1=is.retrieveInstructor(Long.valueOf(3));
-        Assertions.assertNotNull(course1);
+        Instructor result = is.retrieveInstructor(Long.valueOf(1));
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals("John", result.getFirstName());
+        Assertions.assertEquals("Doe", result.getLastName());
     }
 
 }

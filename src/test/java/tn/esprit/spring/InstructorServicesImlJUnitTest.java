@@ -1,13 +1,13 @@
 package tn.esprit.spring;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.spring.entities.Instructor;
 import tn.esprit.spring.repositories.ICourseRepository;
 import tn.esprit.spring.repositories.IInstructorRepository;
+import tn.esprit.spring.services.CourseServicesImpl;
 import tn.esprit.spring.services.InstructorServicesImpl;
 
 import java.time.LocalDate;
@@ -16,8 +16,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@DataJpaTest
-public class InstructorServicesImlJUnitTest {
+@SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+class InstructorServicesImlJUnitTest {
 
     @Autowired
     private IInstructorRepository instructorRepository;
@@ -41,25 +42,30 @@ public class InstructorServicesImlJUnitTest {
     }
 
     @Test
-    public void testAddInstructor() {
+    void testAddInstructor() {
         Instructor instructor = new Instructor();
         instructor.setFirstName("John");
         instructor.setLastName("Doe");
         instructor.setDateOfHire(LocalDate.now());
 
         Instructor savedInstructor = instructorService.addInstructor(instructor);
-        //check saved instructor
+
+        // Check that the saved instructor is not null and has an ID
         assertNotNull(savedInstructor.getNumInstructor());
 
-        //check if instructor exists and compare to our instructor object
+        // Retrieve the instructor from the database
         Instructor retrievedInstructor = instructorRepository.findById(savedInstructor.getNumInstructor()).orElse(null);
-        assert retrievedInstructor != null;
+
+        // Check if the retrieved instructor is not null
+        assertNotNull(retrievedInstructor);
+
+        // Check if the properties match
         assertEquals("John", retrievedInstructor.getFirstName());
         assertEquals("Doe", retrievedInstructor.getLastName());
     }
 
     @Test
-    public void testRetrieveAllInstructors() {
+    void testRetrieveAllInstructors() {
         Instructor instructor1 = new Instructor();
         instructor1.setFirstName("Maher");
         instructor1.setLastName("Gasmi");
