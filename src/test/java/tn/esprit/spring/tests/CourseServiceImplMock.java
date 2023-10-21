@@ -7,7 +7,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.spring.entities.Course;
@@ -41,15 +40,35 @@ public class CourseServiceImplMock {
         }
 
     };
-    @Befor
-    public void setUp() {
-        MockitoAnnotations.initMocks(this); // Initialize Mockito annotations
-    }
+
 
     @Test
     public void testRetriveCourse(){
         Mockito.when(cr.findById(Mockito.anyLong())).thenReturn(Optional.of(course));
         Course course1=cs.retrieveCourse(Long.valueOf(2));
         Assertions.assertNotNull(course1);
+    }
+
+    @Test
+    public void testretrieveAllCourses(){
+        Mockito.when(cr.findAll()).thenReturn(liste);
+        List<Course> result=cs.retrieveAllCourses();
+        Assertions.assertNotNull(result);
+    }
+
+    @Test
+    public void testupdateCourse(){
+        Course updatedCourse = new Course();
+        Mockito.when(cr.save(updatedCourse)).thenReturn(updatedCourse);
+        Course result=cs.updateCourse(updatedCourse);
+        Assertions.assertNotNull(result);
+    }
+
+    @Test
+    public void testaddCourse(){
+        Course course1 = new Course();
+        Mockito.when(cr.save(course1)).thenReturn(course1);
+        Course result=cs.updateCourse(course1);
+        Assertions.assertNotNull(result);
     }
 }

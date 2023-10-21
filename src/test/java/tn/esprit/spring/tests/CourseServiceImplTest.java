@@ -7,11 +7,11 @@ import tn.esprit.spring.entities.Course;
 import tn.esprit.spring.services.ICourseServices;
 
 import java.util.List;
-/*
+
 @SpringBootTest
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)*/
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CourseServiceImplTest {
-/*
+
     @Autowired
     ICourseServices cs;
 
@@ -24,8 +24,23 @@ public class CourseServiceImplTest {
 
     @Test
     @Order(2)
-    public void testretrieveCourse(){
+    public void testretrieveAllCourses(){
         List<Course> result=cs.retrieveAllCourses();
         Assertions.assertNotNull(result);
-    }*/
+    }
+
+    @Test
+    @Order(3)
+    public void testupdateCourse(){
+        Course result=cs.updateCourse(new Course());
+        Assertions.assertNotNull(result);
+    }
+
+    @Test
+    @Order(4)
+    public void testretrieveCourse(){
+        Course c=new Course();
+        Course result=cs.retrieveCourse(c.getNumCourse());
+        Assertions.assertNotNull(result);
+    }
 }
