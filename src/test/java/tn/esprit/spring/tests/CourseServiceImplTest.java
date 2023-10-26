@@ -4,6 +4,8 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.spring.entities.Course;
+import tn.esprit.spring.repositories.ICourseRepository;
+import tn.esprit.spring.services.CourseServicesImpl;
 import tn.esprit.spring.services.ICourseServices;
 
 import java.util.List;
@@ -13,7 +15,21 @@ import java.util.List;
 public class CourseServiceImplTest {
 
     @Autowired
+    private ICourseRepository cr;
+    @Autowired
     ICourseServices cs;
+
+
+    @BeforeEach
+    public void setUp() {
+        cs = new CourseServicesImpl(cr);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        // Clean up the database if needed
+        cr.deleteAll();
+    }
 
     @Test
     @Order(1)

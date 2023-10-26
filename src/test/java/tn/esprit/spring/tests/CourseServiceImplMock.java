@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import tn.esprit.spring.entities.Course;
 import tn.esprit.spring.entities.Registration;
 import tn.esprit.spring.entities.Support;
@@ -24,13 +24,13 @@ import java.util.Optional;
 @ExtendWith(MockitoExtension.class)
 public class CourseServiceImplMock {
 
-    @Mock
+    @MockBean
     ICourseRepository cr;
 
     @InjectMocks
     CourseServicesImpl cs;
 
-    Course course= new Course(Long.valueOf(1),1, TypeCourse.COLLECTIVE_CHILDREN, Support.SKI, new Float(0),1,new HashSet<Registration>());
+    Course course = new Course(Long.valueOf(1), 1, TypeCourse.COLLECTIVE_CHILDREN, Support.SKI, new Float(0), 1, new HashSet<Registration>());
 
     List<Course> liste= new ArrayList<Course>(){
         {
@@ -40,6 +40,8 @@ public class CourseServiceImplMock {
         }
 
     };
+
+
 
 
     @Test
