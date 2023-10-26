@@ -17,6 +17,7 @@ services:
     depends_on:
       - mysqldb
     image: marwaayari/gestion-station-ski
+    container_name: gestion-station-ski
     restart: on-failure
     ports:
       - "8089:8089"
