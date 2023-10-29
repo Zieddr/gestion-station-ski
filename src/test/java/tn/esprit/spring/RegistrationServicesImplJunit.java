@@ -1,11 +1,15 @@
 package tn.esprit.spring;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.TestMethodOrder;
 import org.mockito.Mock;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.spring.entities.Support;
 import tn.esprit.spring.repositories.IRegistrationRepository;
 
@@ -15,6 +19,9 @@ import java.util.List;
 
 import static org.mockito.Mockito.when;
 
+
+@SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class RegistrationServicesImplJunit {
 
     @InjectMocks
