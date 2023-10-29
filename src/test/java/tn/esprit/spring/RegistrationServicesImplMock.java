@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import tn.esprit.spring.entities.Course;
 import tn.esprit.spring.entities.Registration;
 import tn.esprit.spring.entities.Skier;
@@ -29,19 +30,19 @@ public class RegistrationServicesImplMock {
     @InjectMocks
     private tn.esprit.spring.services.RegistrationServicesImpl registrationServices;
 
-    @Mock
+    @MockBean
     private IRegistrationRepository registrationRepository;
 
-    @Mock
+    @MockBean
     private ISkierRepository skierRepository;
 
     @Mock
     private ICourseRepository courseRepository;
 
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-    }
+    //@Before
+    //public void setUp() {
+      //  MockitoAnnotations.initMocks(this);
+    //}
 
     @Test
     public void testAddRegistrationAndAssignToSkier() {
