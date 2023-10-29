@@ -8,17 +8,14 @@ import tn.esprit.spring.repositories.ICourseRepository;
 import tn.esprit.spring.repositories.IRegistrationRepository;
 import tn.esprit.spring.repositories.ISkierRepository;
 
-
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
-import java.util.Optional;
-
 @Slf4j
 @AllArgsConstructor
 @Service
-public class RegistrationServicesImplMock implements  IRegistrationServices{
+public class RegistrationServicesImpl implements  IRegistrationServices{
 
     private IRegistrationRepository registrationRepository;
     private ISkierRepository skierRepository;
@@ -32,43 +29,13 @@ public class RegistrationServicesImplMock implements  IRegistrationServices{
         return registrationRepository.save(registration);
     }
 
-   /* @Override
+    @Override
     public Registration assignRegistrationToCourse(Long numRegistration, Long numCourse) {
         Registration registration = registrationRepository.findById(numRegistration).orElse(null);
         Course course = courseRepository.findById(numCourse).orElse(null);
         registration.setCourse(course);
         return registrationRepository.save(registration);
-    }*/
-
-
-    @Override
-   public Registration assignRegistrationToCourse(Long numRegistration, Long numCourse) {
-       // Rechercher la registration par son numéro
-       Optional<Registration> optionalRegistration = registrationRepository.findById(numRegistration);
-       if (optionalRegistration.isEmpty()) {
-           // Gérer le cas où la registration n'est pas trouvée
-           throw new RegistrationNotFoundException("Registration not found with ID: " + numRegistration);
-       }
-
-       // Rechercher le course par son numéro
-       Optional<Course> optionalCourse = courseRepository.findById(numCourse);
-       if (optionalCourse.isEmpty()) {
-           // Gérer le cas où le course n'est pas trouvé
-           throw new CourseNotFoundException("Course not found with ID: " + numCourse);
-       }
-
-       // Obtenir les objets registration et course à partir des Optionals
-       Registration registration = optionalRegistration.get();
-       Course course = optionalCourse.get();
-
-       // Affecter le course à la registration
-       registration.setCourse(course);
-
-       // Enregistrer la registration mise à jour
-       return registrationRepository.save(registration);
-   }
-
-
+    }
 
     @Transactional
     @Override
@@ -123,6 +90,7 @@ public class RegistrationServicesImplMock implements  IRegistrationServices{
                 log.info("Sorry, your age doesn't allow you to register for this course ! \n Try to Register to a Collective Child Course...");
         }
         return registration;
+
     }
     private Registration assignRegistration (Registration registration, Skier skier, Course course){
         registration.setSkier(skier);
