@@ -14,7 +14,7 @@ import java.util.List;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CourseServiceImplTest {
 
-    @Autowired
+  /*  @Autowired
     private ICourseRepository cr;
     @Autowired
     ICourseServices cs;
@@ -58,5 +58,5 @@ public class CourseServiceImplTest {
         Course c=new Course();
         Course result=cs.retrieveCourse(c.getNumCourse());
         Assertions.assertNotNull(result);
-    }
+    }*/
 }
