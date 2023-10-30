@@ -33,7 +33,5 @@ services:
     volumes:
       - m2:/root/.m2
 volumes:
-  -my-db:
-    external: true
-  -m2:
-    external: true
+  my-db:
+  m2:
