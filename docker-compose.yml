@@ -5,8 +5,8 @@ services:
     restart: unless-stopped
     container_name: mysql-container
     environment:
-      - MYSQL_ROOT_PASSWORD = password
-      - MYSQL_ALLOW_EMPTY_PASSWORD = yes
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     ports:
       - '3306:3306'
     expose:
