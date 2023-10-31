@@ -17,19 +17,24 @@ services:
     depends_on:
       - mysqldb
     image: zieddr8/gestion-station-ski
+    container_name: backapp-container
     restart: on-failure
     ports:
       - "8089:8089"
+    expose:
+      - '8089'
     environment:
       SPRING_APPLICATION_JSON: '{
       "spring.datasource.url" : "jdbc:mysql://mysqldb:3306/stationSki?createDatabaseIfNotExist=true"
       "spring.datasource.username" : "root"
+      "spring.datasource.password" : "password"
       "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect"
       "spring.jpa.hibernate.ddl-auto" : "update"
       }'
     build:
       context: .
       dockerfile: Dockerfile
+
     volumes:
       - m2:/root/.m2
 volumes:
