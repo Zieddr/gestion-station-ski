@@ -20,11 +20,6 @@ public class CourseServiceImplTest {
     ICourseServices cs;
 
 
-    @BeforeEach
-    public void setUp() {
-        cs = new CourseServicesImpl(cr);
-    }
-
     @AfterEach
     public void tearDown() {
         // Clean up the database if needed
