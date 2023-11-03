@@ -55,6 +55,7 @@ public class CourseServiceImplTest {
     @Test
     @Order(4)
     public void testretrieveCourse(){
+        cs.addCourse(c);
         Course result=cs.retrieveCourse(c.getNumCourse());
         Assertions.assertNotNull(result);
     }
