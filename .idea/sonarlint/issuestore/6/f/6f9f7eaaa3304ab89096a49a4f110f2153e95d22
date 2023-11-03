@@ -1,0 +1,13 @@
+
+·
+java:S3577"”Rename class "CourseServiceImplMock" to match the regular expression: '^((Test|IT)[a-zA-Z0-9_]+|[A-Z][a-zA-Z0-9_]*(Test|Tests|TestCase|IT|ITCase))$'(ÆªÁ±üÿÿÿÿ8Êø»æ¶1
+@
+java:S57860"Remove this 'public' modifier.(îî¯üÿÿÿÿ8Ëø»æ¶1
+@
+java:S57867"Remove this 'public' modifier.(ß¬¥Êıÿÿÿÿ8Ëø»æ¶1
+@
+java:S5786>"Remove this 'public' modifier.(¦â‹‹ÿÿÿÿÿ8Ëø»æ¶1
+;
+java:S5786F"Remove this 'public' modifier.(Û¸ì8Ëø»æ¶1
+@
+java:S5786"Remove this 'public' modifier.(ÆªÁ±üÿÿÿÿ8Ìø»æ¶1

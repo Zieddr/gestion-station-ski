@@ -34,7 +34,7 @@ public class CourseServiceImplTest {
     @Test
     @Order(1)
     public void testaddCourse(){
-        Course result=cs.addCourse(new Course());
+        Course result=cs.addCourse(c);
         Assertions.assertNotNull(result);
     }
 
