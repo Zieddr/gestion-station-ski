@@ -1,5 +1,22 @@
 version: '3.3'
 services:
+  sonarqube:
+    image: sonaqube
+    ports:
+      - "9000:9000"
+      - "9092:9092"
+    volumes:
+      - SonarQube_data:/opt/SonarQube/data
+      - SonarQube_extentions:/opt/SonarQube/extensions
+      - SonarQube_logs:/opt/SonarQube/logs
+
+  nexus:
+    image: sonatype/nexus3
+    ports:
+      - "8082:8081"
+    volumes:
+      - nexus-data:/nexus-data
+
   mysqldb:
     image: mysql:5.7
     restart: unless-stopped
@@ -17,19 +34,30 @@ services:
     depends_on:
       - mysqldb
     image: marwaayari/gestion-station-ski
-    container_name: gestion-station-ski
+    container_name: backapp-container
     restart: on-failure
     ports:
       - "8089:8089"
+    expose:
+      - '8089'
     environment:
       SPRING_APPLICATION_JSON: '{
-      "spring.datasource.url" : "jdbc:mysql://mysqldb:3306/stationSki?createDatabaseIfNotExist=true",
-      "spring.datasource.username" : "root",
-      "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+      "spring.datasource.url" : "jdbc:mysql://mysqldb:3306/stationSki?createDatabaseIfNotExist=true"
+      "spring.datasource.username" : "root"
+      "spring.datasource.password" : "password"
+      "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect"
       "spring.jpa.hibernate.ddl-auto" : "update"
       }'
+    build:
+      context: .
+      dockerfile: Dockerfile
+
     volumes:
       - m2:/root/.m2
 volumes:
-  m2:
+  SonarQube_data:
+  SonarQube_extentions:
+  SonarQube_logs:
+  nexus-data:
   my-db:
+  m2:
