@@ -56,7 +56,20 @@ public class RegistrationServicesImplMock {
 
         assertEquals(skier, result.getSkier());
     }
+    @Test
+    public void testAddRegistrationAndAssignToSkier22() {
+        Skier skier = new Skier();
+        Registration registration = new Registration();
 
+        when(skierRepository.findById(1L)).thenReturn(Optional.of(skier));
+        when(registrationRepository.save(registration)).thenReturn(registration);
+
+        Registration result = registrationServices.addRegistrationAndAssignToSkier(registration, 1L);
+
+        assertEquals(skier, result.getSkier());
+    }
+
+    // test
    /* @Test
     public void testAssignRegistrationToCourse() {
         Registration registration = new Registration();
