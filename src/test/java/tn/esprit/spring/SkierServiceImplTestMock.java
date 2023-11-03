@@ -1,10 +1,14 @@
 package tn.esprit.spring;
 
+import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -12,6 +16,7 @@ import tn.esprit.spring.entities.Skier;
 import tn.esprit.spring.entities.Subscription;
 import tn.esprit.spring.repositories.ISkierRepository;
 import tn.esprit.spring.services.ISkierServices;
+import tn.esprit.spring.services.SkierServicesImpl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,7 +31,8 @@ public class SkierServiceImplTestMock {
     ISkierRepository skierRepositoryr;
 
     @InjectMocks
-    ISkierServices skierServices;
+    SkierServicesImpl skierServices;
+
 
     Skier skier = new Skier(Long.valueOf(1),"First name1","last name1", LocalDate.of(1999,1,1),"Tunis", new Subscription(),null,null);
 
@@ -40,13 +46,17 @@ public class SkierServiceImplTestMock {
     };
 
 
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+    }
 
 
     @Test
     public void testRetriveCourse(){
         Mockito.when(skierRepositoryr.findById(Mockito.anyLong())).thenReturn(Optional.of(skier));
-        Skier course1=skierServices.retrieveSkier(Long.valueOf(2));
-        Assertions.assertNotNull(course1);
+        Skier skier1=skierServices.retrieveSkier(Long.valueOf(2));
+        Assertions.assertNotNull(skier1);
     }
 
     @Test
