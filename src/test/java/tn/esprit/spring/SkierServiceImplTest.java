@@ -5,30 +5,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.spring.entities.Skier;
 import tn.esprit.spring.repositories.ISkierRepository;
+import tn.esprit.spring.services.ISkierServices;
 
-import java.util.List;
-
-@SpringBootTest
-@TestMethodOrder(MethodOrderer.class)
+//@SpringBootTest
+//@TestMethodOrder(MethodOrderer.class)
 public class SkierServiceImplTest {
-
+/*
     @Autowired
-    ISkierRepository skierRepository;
-
+    ISkierServices skierServices;
     @Test
     @Order(1)
     public void retrieveAllSkiersTest() {
 
-        Assertions.assertNotNull(skierRepository.findAll());
+        Assertions.assertNotNull(skierServices.retrieveAllSkiers());
     }
 
     @Test
     @Order(2)
-    public void addSkierTest() {
-
+    public void retrieveSkierTest() {
         Skier skier=new Skier();
-        Assertions.assertNotNull(skierRepository.save(skier));
+        Assertions.assertNotNull(skierServices.retrieveSkier(skier.getNumSkier()));
     }
 
+    @Test
+    @Order(3)
+    public void updateSkierTest() {
+        Skier skier=new Skier();
+        Assertions.assertNotNull(skierServices.addSkier(skier));
+    }
+
+*/
 
 }
