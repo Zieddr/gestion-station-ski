@@ -1,70 +1,76 @@
 package tn.esprit.spring;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.mockito.Mock;
 import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+import tn.esprit.spring.entities.Course;
+import tn.esprit.spring.entities.Registration;
 import tn.esprit.spring.entities.Support;
+import tn.esprit.spring.repositories.ICourseRepository;
 import tn.esprit.spring.repositories.IRegistrationRepository;
+import tn.esprit.spring.services.RegistrationServicesImpl;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
+import static org.mockito.MockitoAnnotations.openMocks;
 import static org.mockito.Mockito.when;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class RegistrationServicesImplJunit {
+ class RegistrationServicesImplJunit {
 
     @InjectMocks
-    private RegistrationServicesImplJunit yourClass;
+    private RegistrationServicesImpl registrationService;
 
     @Mock
     private IRegistrationRepository registrationRepository;
 
+    @Mock
+    private ICourseRepository courseRepository;
+
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        openMocks(this);
     }
 
     @Test
-    public void testNumWeeksCourseOfInstructorBySupport() {
-        // Définir les valeurs d'entrée pour le test
-        Long numInstructor = 1L; // Remplacez par la valeur d'instructeur réelle
-        Support support = Support.SKI; // Remplacez par le support réel
+    void testAssignRegistrationToCourse() {
+        // Créez un Registration fictif
+        Long numRegistration = 1L;
+        Registration registration = new Registration();
+        registration.setNumRegistration(numRegistration);
 
-        // Définir la valeur de retour simulée pour le mock registrationRepository
-        List<Integer> expectedWeeks = Arrays.asList(1, 2, 3); // Remplacez par les valeurs attendues
+        // Créez un Course fictif
+        Long numCourse = 2L;
+        Course course = new Course();
+        course.setNumCourse(numCourse);
 
-        when(registrationRepository.numWeeksCourseOfInstructorBySupport(numInstructor, support))
-                .thenReturn(expectedWeeks);
+        // Définissez les comportements simulés pour les méthodes de vos repositories
+        when(registrationRepository.findById(numRegistration)).thenReturn(Optional.of(registration));
+        when(courseRepository.findById(numCourse)).thenReturn(Optional.of(course));
+        when(registrationRepository.save(Mockito.any(Registration.class))).thenReturn(registration);
 
-        // Appeler la méthode à tester
-        List<Integer> actualWeeks = yourClass.numWeeksCourseOfInstructorBySupport(numInstructor, support);
+        // Appelez la méthode que vous testez
+        Registration result = registrationService.assignRegistrationToCourse(numRegistration, numCourse);
 
-        // Vérifier que les résultats sont conformes aux attentes
-        assertEquals(expectedWeeks, actualWeeks);
+        // Assurez-vous que la méthode a correctement attribué le Course à la Registration
+        assertEquals(course, result.getCourse());
+
+        // Vérifiez que les méthodes des repositories ont été appelées comme prévu
+        Mockito.verify(registrationRepository, Mockito.times(1)).findById(numRegistration);
+        Mockito.verify(courseRepository, Mockito.times(1)).findById(numCourse);
+        Mockito.verify(registrationRepository, Mockito.times(1)).save(registration);
     }
 
-    private List<Integer> numWeeksCourseOfInstructorBySupport(Long numInstructor, Support support) {
-        // Vous devez implémenter la logique de cette méthode pour obtenir la liste des semaines
-        // en fonction du numéro de l'instructeur et du type de support.
-
-        // Exemple factice pour la démonstration :
-        if (numInstructor.equals(1L) && support.equals(Support.SKI)) {
-            return Arrays.asList(1, 2, 3);
-        } else {
-            return Collections.emptyList(); // Retourne une liste vide par défaut
-        }
-    }
-
-
+    // Ajoutez d'autres tests au besoin
 }
