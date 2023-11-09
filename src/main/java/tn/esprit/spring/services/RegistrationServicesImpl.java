@@ -92,7 +92,7 @@ public class RegistrationServicesImpl implements  IRegistrationServices{
         return registration;
 
     }
-    private Registration assignRegistration (Registration registration, Skier skier, Course course){
+    public Registration assignRegistration (Registration registration, Skier skier, Course course){
         registration.setSkier(skier);
         registration.setCourse(course);
         return registrationRepository.save(registration);
