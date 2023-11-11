@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ContextConfiguration;
 import tn.esprit.spring.entities.Course;
 import tn.esprit.spring.entities.Registration;
 import tn.esprit.spring.entities.Skier;
@@ -21,6 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+@ContextConfiguration(classes = {RegistrationServicesImpl.class})
 
 @ExtendWith(MockitoExtension.class)
 public class RegistrationServicesImplTest {
