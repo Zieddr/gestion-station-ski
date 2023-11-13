@@ -1,0 +1,44 @@
+version: '3.3'
+services:
+  
+  mysqldb:
+    image: mysql:5.7
+    restart: unless-stopped
+    container_name: mysql-container
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql
+  app:
+    depends_on:
+      - mysqldb
+    image: chemsmarsaoui/projetdevops
+    container_name: backapp-container
+    restart: on-failure
+    ports:
+      - "8089:8089"
+    expose:
+      - '8089'
+    environment:
+      SPRING_APPLICATION_JSON: '{
+      "spring.datasource.url" : "jdbc:mysql://mysqldb:3306/stationSki?createDatabaseIfNotExist=true",
+      "spring.datasource.username" : "root",
+      "spring.datasource.password" : "password",
+      "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+      "spring.jpa.hibernate.ddl-auto" : "update"
+      }'
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    volumes:
+      - m2:/root/.m2
+volumes:
+  
+  my-db:
+  m2:
