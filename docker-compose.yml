@@ -38,9 +38,5 @@ services:
     volumes:
       - m2:/root/.m2
 volumes:
-  SonarQube_data:
-  SonarQube_extentions:
-  SonarQube_logs:
-  nexus-data:
   my-db:
   m2:
