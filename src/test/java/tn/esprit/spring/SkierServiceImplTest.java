@@ -11,7 +11,7 @@ import tn.esprit.spring.services.ISubscriptionServices;
 import java.time.LocalDate;
 
 @SpringBootTest
-@TestMethodOrder(MethodOrderer.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SkierServiceImplTest {
 
     @Autowired
