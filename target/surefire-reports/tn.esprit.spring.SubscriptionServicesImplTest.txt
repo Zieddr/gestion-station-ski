@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: tn.esprit.spring.SubscriptionServicesImplTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.046 s <<< FAILURE! - in tn.esprit.spring.SubscriptionServicesImplTest
+testRetrieveSubscriptions  Time elapsed: 0.045 s  <<< ERROR!
+java.lang.NullPointerException
+	at tn.esprit.spring.SubscriptionServicesImplTest.testRetrieveSubscriptions(SubscriptionServicesImplTest.java:26)
+
