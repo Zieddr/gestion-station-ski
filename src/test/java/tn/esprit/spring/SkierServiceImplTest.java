@@ -10,10 +10,10 @@ import tn.esprit.spring.services.ISkierServices;
 import tn.esprit.spring.services.ISubscriptionServices;
 import java.time.LocalDate;
 
-//@SpringBootTest
-//@TestMethodOrder(MethodOrderer.class)
+@SpringBootTest
+@TestMethodOrder(MethodOrderer.class)
 public class SkierServiceImplTest {
-/*
+
     @Autowired
     ISkierServices skierServices;
 
@@ -39,7 +39,7 @@ public class SkierServiceImplTest {
         Skier skier = new Skier(Long.valueOf(1),"First name1","last name1", LocalDate.of(1999,1,1),"Tunis", null,null,null);
         Assertions.assertNotNull(skierServices.retrieveSkier(skier.getNumSkier()));
     }
-*/
+
 
 
 
