@@ -6,10 +6,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.spring.entities.Skier;
 import tn.esprit.spring.entities.Subscription;
 import tn.esprit.spring.entities.TypeSubscription;
-import tn.esprit.spring.repositories.ISkierRepository;
 import tn.esprit.spring.services.ISkierServices;
 import tn.esprit.spring.services.ISubscriptionServices;
-
 import java.time.LocalDate;
 
 //@SpringBootTest
@@ -41,7 +39,6 @@ public class SkierServiceImplTest {
         Skier skier = new Skier(Long.valueOf(1),"First name1","last name1", LocalDate.of(1999,1,1),"Tunis", null,null,null);
         Assertions.assertNotNull(skierServices.retrieveSkier(skier.getNumSkier()));
     }
-
 */
 
 
