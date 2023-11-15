@@ -72,6 +72,18 @@
 
 	<build>
 		<plugins>
+<plugin>
+            <groupId>org.sonarsource.scanner.maven</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>3.10.0.2594</version>
+            <configuration>
+                <!-- URL du serveur SonarQube -->
+                <sonar.host.url>http://localhost:9000</sonar.host.url>
+                <!-- Informations d'identification (si nécessaire) -->
+                <sonar.login>admin</sonar.login>
+                <sonar.password>191JMT2710</sonar.password>
+            </configuration>
+        </plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
