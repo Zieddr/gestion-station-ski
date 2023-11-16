@@ -1,3 +1,5 @@
+package tn.esprit.spring;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -8,18 +10,19 @@ import tn.esprit.spring.entities.TypeSubscription;
 import tn.esprit.spring.repositories.ISubscriptionRepository;
 import tn.esprit.spring.services.SubscriptionServicesImpl;
 
-import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-public class SubscriptionServicesImplTest {
-
-    @Mock
-    private ISubscriptionRepository subscriptionRepository;
+class SubscriptionServicesImplTest {
 
     @InjectMocks
     private SubscriptionServicesImpl subscriptionServices;
+
+    @Mock
+    private ISubscriptionRepository subscriptionRepository;
 
     @BeforeEach
     void setUp() {
@@ -27,35 +30,22 @@ public class SubscriptionServicesImplTest {
     }
 
     @Test
-    void testAddSubscription() {
-        // Créer un objet Subscription pour le test
-        Subscription subscription = new Subscription();
-        subscription.setTypeSub(TypeSubscription.ANNUAL);
-        subscription.setStartDate(LocalDate.now());
+    void testGetSubscriptionByType() {
+        // Mocking data
+        TypeSubscription type = TypeSubscription.ANNUAL;
+        Subscription subscription1 = new Subscription(/* initialize your subscription object */);
+        Subscription subscription2 = new Subscription(/* initialize another subscription object */);
+        Set<Subscription> expectedSubscriptions = new HashSet<>();
+        expectedSubscriptions.add(subscription1);
+        expectedSubscriptions.add(subscription2);
 
-        // Configurer le mock pour retourner l'objet Subscription sauvegardé
-        when(subscriptionRepository.save(subscription)).thenReturn(subscription);
+        // Mocking repository behavior
+        when(subscriptionRepository.findByTypeSubOrderByStartDateAsc(type)).thenReturn(expectedSubscriptions);
 
-        // Appeler la méthode que vous testez
-        Subscription result = subscriptionServices.addSubscription(subscription);
+        // Calling the service method
+        Set<Subscription> actualSubscriptions = subscriptionServices.getSubscriptionByType(type);
 
-        // Vérifier que la date de fin a été correctement calculée en fonction du type de subscription
-        switch (subscription.getTypeSub()) {
-            case ANNUAL:
-                assertEquals(subscription.getStartDate().plusYears(1), result.getEndDate());
-                break;
-            case SEMESTRIEL:
-                assertEquals(subscription.getStartDate().plusMonths(6), result.getEndDate());
-                break;
-            case MONTHLY:
-                assertEquals(subscription.getStartDate().plusMonths(1), result.getEndDate());
-                break;
-        }
-
-        // Vérifier que la méthode de sauvegarde a été appelée avec l'objet Subscription
-        // (cela garantit que la logique de la méthode addSubscription est correcte)
-        // Notez que vous pouvez également utiliser ArgumentCaptor pour capturer l'argument passé à save
-        // et effectuer des assertions plus détaillées.
-        // verify(subscriptionRepository).save(any(Subscription.class));
+        // Assertions
+        assertEquals(expectedSubscriptions, actualSubscriptions);
     }
 }
