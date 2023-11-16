@@ -1,4 +1,14 @@
-FROM openjdk:8-jdk-alpine
-EXPOSE 8089
-ADD http://http://192.168.1.100:8081/1/repository/maven-releases/tn/esprit/spring/gestion-station-ski/1.0/gestion-station-ski-1.0.jar /app/gestion-station-ski.jar
-ENTRYPOINT ["java","-jar","gestion-station-ski.jar"]
+# Use the official OpenJDK base image
+FROM openjdk:11
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the Spring Boot application JAR file into the container
+COPY target/gestion-station-ski-1.0.jar app.jar
+
+# Expose the port your Spring Boot application will run on
+EXPOSE 8091
+
+# Specify the command to run your Spring Boot application
+CMD ["java", "-jar", "app.jar"]

@@ -1,34 +1,66 @@
-version: '3.3'
+version: "2.2"
+
 services:
-  mysqldb:
-    image: mysql:5.7
-    restart: unless-stopped
-    container_name: mysql-container
-    environment:
-      - MYSQL_ROOT_PASSWORD = password
-      - MYSQL_ALLOW_EMPTY_PASSWORD = yes
+  # Spring Boot Application
+  spring:
+    image: zeinebz:latest
+    container_name: backend 
     ports:
-      - '3306:3306'
-    expose:
-      - '3306'
-    volumes:
-      - my-db:/var/lib/mysql
-  app:
+      - "8082:8082"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/stationSki?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
     depends_on:
-      - mysqldb
-    image: zeinebzz/gestion-station-ski
-    restart: on-failure
-    ports:
-      - "8089:8089"
+      - mysql
+    networks:
+      - mynetwork
+      
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
     environment:
-      SPRING_APPLICATION_JSON: '{
-      "spring.datasource.url" : "jdbc:mysql://mysqldb:3306/stationSki?createDatabaseIfNotExist=true"
-      "spring.datasource.username" : "root"
-      "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect"
-      "spring.jpa.hibernate.ddl-auto" : "update"
-      }'
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=mysql
+    ports:
+      - "3306:3306"
     volumes:
-      - m2:/root/.m2
+      - mysql-data:/var/lib/mysql
+    networks:
+      - mynetwork
+
+  # Prometheus (with "host" network mode)
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - /prometheus.yml:/etc/prometheus/prometheus.yml
+    network_mode: "host" # Set the network mode to "host" for Prometheus
+
+  # Grafana
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - /var/lib/grafana-data:/var/lib/grafana
+    network_mode: "host"
+    
+  # Nexus 
+  nexus:
+    image: sonatype/nexus3
+    ports:
+      - "8081:8081"
+    volumes:
+      - /var/lib/nexus-data:/nexus-data
+
+networks:
+  mynetwork:
+    driver: bridge
+
 volumes:
-  -m2:
-  -my-db:
+  mysql-data:
+  nexus-data:
+  grafana-data:
