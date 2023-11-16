@@ -1,12 +1,26 @@
-version: "2.2"
-
+version: '2'
 services:
-  # Spring Boot Application
-  spring:
-    image: zeinebz:latest
-    container_name: backend 
+  mysql:
+    image: mysql:5.7
+    restart: unless-stopped
+    container_name: mysql
     ports:
-      - "8082:8082"
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_DATABASE: stationSki
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - mysql_config:/etc/mysql/conf.d
+    networks:
+      - app-network
+
+  spring-app:
+    image: zeinebz:latest
+    container_name: backend
+    ports:
+      - "8089:8089"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/stationSki?createDatabaseIfNotExist=true
       - SPRING_DATASOURCE_USERNAME=root
@@ -14,53 +28,11 @@ services:
     depends_on:
       - mysql
     networks:
-      - mynetwork
-      
-  # MySQL Database
-  mysql:
-    image: mysql:8.0
-    container_name: mysql
-    environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-      - MYSQL_DATABASE=mysql
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql-data:/var/lib/mysql
-    networks:
-      - mynetwork
-
-  # Prometheus (with "host" network mode)
-  prometheus:
-    image: prom/prometheus
-    container_name: prometheus
-    volumes:
-      - /prometheus.yml:/etc/prometheus/prometheus.yml
-    network_mode: "host" # Set the network mode to "host" for Prometheus
-
-  # Grafana
-  grafana:
-    image: grafana/grafana:latest
-    environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-    volumes:
-      - /var/lib/grafana-data:/var/lib/grafana
-    network_mode: "host"
-    
-  # Nexus 
-  nexus:
-    image: sonatype/nexus3
-    ports:
-      - "8081:8081"
-    volumes:
-      - /var/lib/nexus-data:/nexus-data
-
-networks:
-  mynetwork:
-    driver: bridge
+      - app-network
 
 volumes:
-  mysql-data:
-  nexus-data:
-  grafana-data:
+  mysql_data:
+  mysql_config:
+networks:
+  app-network:
+    driver: bridge
